@@ -40,12 +40,17 @@ if (!email || !password) {
   };
 
   return (
-    <div className="auth-card">
+  <div className="auth-card">
 
-      <img src="/main_logo.png" className="auth-logo" alt="logo" />
+    <img src="/main_logo.png" className="auth-logo" alt="logo" />
 
-      <h2>Welcome Back!</h2>
-      <p className="auth-sub">Login to your account</p>
+    <h2>Welcome Back!</h2>
+    <p className="auth-sub">Login to your account</p>
+
+ <div className="auth-body">
+
+    {/* FORM SECTION */}
+    <div className="auth-form">
 
       <div className="input-box">
         <FaEnvelope className="input-icon" />
@@ -68,17 +73,24 @@ if (!email || !password) {
         <FaEye className="eye-icon" onClick={() => setShow(!show)} />
       </div>
 
-      <button onClick={handleLogin}>Login →</button>
-
-      <p className="auth-switch">
-        Don't have an account?{" "}
-        <span onClick={() => setMode("signup")}>
-          Sign Up
-        </span>
-      </p>
-
     </div>
-  );
+
+    {/* BUTTON */}
+    <button onClick={handleLogin}>Login →</button>
+
+    {/* PUSH CONTENT DOWN */}
+    <div className="spacer"></div>
+
+    <p className="auth-switch">
+      Don't have an account?{" "}
+      <span onClick={() => setMode("signup")}>
+        Sign Up
+      </span>
+    </p>
+
+  </div>
+  </div>
+);
 }
 
 export default Login;
