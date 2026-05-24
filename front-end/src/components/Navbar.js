@@ -1,52 +1,128 @@
-import { useState } from "react";
-
-/*
-  Navbar Component
-  ----------------
-  Provides SPA navigation by updating the page state
-  without triggering a browser reload.
-*/
+import { useState, useEffect } from "react";
+import {
+  FaUserCircle,
+  FaHome,
+  FaMapMarkedAlt,
+  FaHotel,
+  FaCar,
+  FaSignOutAlt
+} from "react-icons/fa";
 
 function Navbar({ setPage }) {
   const [open, setOpen] = useState(false);
+  const [user, setUser] = useState(null);
+  const [profileOpen, setProfileOpen] = useState(false);
 
-  // Navigate to selected page and close mobile menu
   const goTo = (pageName) => {
     setPage(pageName);
     setOpen(false);
   };
 
+  useEffect(() => {
+    const stored = localStorage.getItem("user");
+    if (stored) setUser(JSON.parse(stored));
+  }, []);
+
+  useEffect(() => {
+    const handleClick = () => setProfileOpen(false);
+    window.addEventListener("click", handleClick);
+    return () => window.removeEventListener("click", handleClick);
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    window.location.reload();
+  };
+
   return (
     <>
+      {/* ✅ NAVBAR */}
       <nav className="navbar">
-        {/* Desktop navigation */}
         <ul className="nav-links desktop">
           <li onClick={() => goTo("home")}>Home</li>
-          <li onClick={() => goTo("tours")}>Foreigner Tours</li>
+          <li onClick={() => goTo("tours")}>Tour Operators</li>
           <li onClick={() => goTo("accommodations")}>Accommodations</li>
           <li onClick={() => goTo("cars")}>Car Rentals</li>
+
+          {/* ✅ PROFILE (DESKTOP) */}
+          {user && (
+            <li className="profile-section">
+              <div
+                className="profile-icon"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setProfileOpen(!profileOpen);
+                }}
+              >
+                <FaUserCircle />
+              </div>
+
+              {profileOpen && (
+                <div className="profile-dropdown">
+                  <p>Welcome, {user.name}</p>
+                  <button onClick={handleLogout}>Logout</button>
+                </div>
+              )}
+            </li>
+          )}
         </ul>
 
-        {/* Mobile hamburger button */}
+        {/* ✅ HAMBURGER */}
         <div className="hamburger" onClick={() => setOpen(true)}>
           ☰
         </div>
       </nav>
 
-      {/* Full-screen mobile menu */}
+      {/* ✅ MOBILE SIDE MENU */}
       {open && (
         <div className="menu-overlay">
-          <div className="close-btn" onClick={() => setOpen(false)}>
-            ✕
-          </div>
+          <div className="side-menu">
 
-          <ul className="overlay-menu">
-            <li onClick={() => goTo("home")}>Home</li>
-            <li onClick={() => goTo("destinations")}>Destinations</li>
-            <li onClick={() => goTo("tours")}>Foreigner Tours</li>
-            <li onClick={() => goTo("accommodations")}>Accommodations</li>
-            <li onClick={() => goTo("cars")}>Car Rentals</li>
-          </ul>
+            {/* CLOSE */}
+            <div className="close-btn" onClick={() => setOpen(false)}>
+              ✕
+            </div>
+
+            {/* PROFILE */}
+            {user && (
+              <div className="menu-profile">
+                <FaUserCircle className="menu-avatar" />
+                <p>{user.name}</p>
+              </div>
+            )}
+
+            {/* NAV ITEMS */}
+            <ul>
+              <li onClick={() => goTo("home")}>
+                <FaHome className="menu-icon" />
+                <span>Home</span>
+              </li>
+
+              <li onClick={() => goTo("tours")}>
+                <FaMapMarkedAlt className="menu-icon" />
+                <span>Tour Operators</span>
+              </li>
+
+              <li onClick={() => goTo("accommodations")}>
+                <FaHotel className="menu-icon" />
+                <span>Accommodations</span>
+              </li>
+
+              <li onClick={() => goTo("cars")}>
+                <FaCar className="menu-icon" />
+                <span>Car Rentals</span>
+              </li>
+
+              {/* LOGOUT */}
+              {user && (
+                <li onClick={handleLogout} className="logout">
+                  <FaSignOutAlt className="menu-icon" />
+                  <span>Logout</span>
+                </li>
+              )}
+            </ul>
+
+          </div>
         </div>
       )}
     </>

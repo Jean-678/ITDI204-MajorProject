@@ -1,38 +1,66 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
-import BookingForm from "./components/BookingForm";
 import ForeignerTours from "./components/ForeignerTours";
 import Accommodations from "./components/Accommodations";
 import CarRentals from "./components/CarRentals";
+import AuthModal from "./components/AuthModal";
+import WelcomeScreen from "./components/WelcomeScreen";
 import "./App.css";
 
-/*
-  App Component
-  -------------
-  Controls Single Page Application (SPA) navigation
-  using state-based conditional rendering.
-  This allows smooth transitions without page reloads.
-*/
-
 function App() {
-  // State to control which "page" is currently visible (SPA navigation)
   const [page, setPage] = useState("home");
+
+  const [user, setUser] = useState(null);
+  const [authMode, setAuthMode] = useState("login");
+
+  // ✅ ADD THIS
+  const [showAuth, setShowAuth] = useState(false);
+
+  useEffect(() => {
+    const stored = localStorage.getItem("user");
+    if (stored) setUser(JSON.parse(stored));
+  }, []);
+
+  // ✅ LOCK SCREEN
+if (!user) {
+  return (
+    <>
+      {/* ✅ SHOW ONLY WELCOME */}
+      {!showAuth && (
+        <WelcomeScreen
+          onStart={() => {
+            setAuthMode("login");
+            setShowAuth(true);
+          }}
+        />
+      )}
+
+      {/* ✅ SHOW ONLY LOGIN (NOT BELOW, ONLY WHEN TRIGGERED) */}
+      {showAuth && (
+        <div className="auth-container">
+          <AuthModal
+            show={true}
+            mode={authMode}
+            setMode={setAuthMode}
+            onAuthSuccess={(user) => {
+              localStorage.setItem("user", JSON.stringify(user));
+              setUser(user);
+            }}
+          />
+        </div>
+      )}
+    </>
+  );
+}
 
   return (
     <>
-      {/* Navigation bar receives setPage to control SPA navigation */}
       <Navbar setPage={setPage} />
 
-      {/* Conditional rendering for SPA-style navigation */}
       {page === "home" && <Hero setPage={setPage} />}
-
-      {page === "booking" && <BookingForm />}
-
       {page === "tours" && <ForeignerTours />}
-
       {page === "accommodations" && <Accommodations />}
-
       {page === "cars" && <CarRentals />}
     </>
   );

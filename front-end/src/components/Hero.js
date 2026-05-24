@@ -14,10 +14,6 @@ function Hero({ setPage }) {
           Discover destinations, explore culture, and book unforgettable
           experiences across Vanuatu - all in one place.
         </p>
-
-        <button onClick={() => setPage("destinations")}>
-          Explore Destinations
-        </button>
       </div>
     </section>
   );

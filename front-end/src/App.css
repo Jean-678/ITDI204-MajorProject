@@ -1,29 +1,46 @@
-/* ===== GLOBAL ===== */
+/* =========================================
+   GLOBAL
+========================================= */
 body {
   margin: 0;
   font-family: "Segoe UI", sans-serif;
+background: linear-gradient(
+    135deg,
+    #2F80ED,
+    #43C6AC,
+    #EAF4FF
+  );
+
+  min-height: 100vh;
 }
 
-/* ===== NAVBAR (DESKTOP) ===== */
+/* =========================================
+   NAVBAR (CLEAN + LIGHT)
+========================================= */
 .navbar {
-  position: absolute;
+  position: fixed;
   top: 0;
   width: 100%;
   height: 64px;
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 100;
+  z-index: 9999;
+
   background: linear-gradient(
-    rgba(0, 0, 0, 0.75),
-    rgba(0, 0, 0, 0.25)
+    to bottom,
+    rgba(0, 0, 0, 0.35),
+    rgba(0, 0, 0, 0.1)
   );
+
+  /* ✅ light glass */
+  backdrop-filter: blur(6px);
 }
 
 .nav-links {
   list-style: none;
   display: flex;
-  gap: 34px;
+  gap: 30px;
   margin: 0;
   padding: 0;
 }
@@ -31,19 +48,120 @@ body {
 .nav-links li {
   color: white;
   font-size: 15px;
+  font-weight: 500;
   cursor: pointer;
+  transition: 0.2s;
 }
 
 .nav-links li:hover {
-  color: #f4b400;
+  color: #56ccf2;
+  transform: translateY(-2px);
 }
 
-/* Hide hamburger on desktop */
+.menu-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 9999;
+}
+
+.side-menu li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  padding: 12px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.overlay-menu li:hover {
+  color: #56ccf2;
+}
+
+.overlay-menu {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+  gap: 20px;
+}
+
+.side-menu li:hover {
+  background: rgba(86, 204, 242, 0.1);
+}
+
+.mobile-dropdown {
+  position: static; /* ✅ IMPORTANT FOR MOBILE */
+  margin-top: 10px;
+}
+
+.side-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 260px;
+  height: 100%;
+  background: #2f80ed;
+  color: white;
+  padding: 80px 20px 20px;
+  display: flex;
+  flex-direction: column;
+  transform: translateX(-100%);
+  animation: slideIn 0.3s forwards;
+}
+
+.side-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  background: transparent;
+}
+
+.menu-profile {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.menu-avatar {
+  font-size: 40px;
+  margin-bottom: 10px;
+}
+
+.logout {
+  margin-top: auto;
+  color: #ed6262;
+}
+
 .hamburger {
   display: none;
+  font-size: 26px;
+  color: white;
+  cursor: pointer;
 }
 
-/* ===== HERO / HOME ===== */
+@media (max-width: 768px) {
+  .nav-links.desktop {
+    display: none;
+  }
+
+  .hamburger {
+    display: block;
+  }
+}
+
+@keyframes slideIn {
+  to {
+    transform: translateX(0);
+  }
+}
+/* =========================================
+   HERO
+========================================= */
 .home {
   height: 100vh;
   background-size: cover;
@@ -56,77 +174,162 @@ body {
   inset: 0;
   background: linear-gradient(
     to bottom,
-    rgba(0, 0, 0, 0.6),
+    rgba(0, 0, 0, 0.55),
+    rgba(0, 0, 0, 0.35),
     rgba(0, 0, 0, 0.2)
   );
 }
 
 .home-content {
   position: absolute;
-  bottom: 30%;
-  left: 8%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
   color: white;
-  max-width: 520px;
+  max-width: 650px;
+  width: 90%;
 }
 
 .home-content h1 {
-  font-size: 3rem;
-  font-family: Georgia, serif;
+  font-size: 3.2rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  text-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
 }
 
 .home-content p {
-  font-size: 1rem;
+  font-size: 1.1rem;
   line-height: 1.6;
+  margin-bottom: 20px;
+  text-shadow: 0 3px 10px rgba(0, 0, 0, 0.5);
+}
+/* =========================================
+   PAGE BACKGROUNDS (OCEAN STYLE)
+========================================= */
+
+.page {
+  max-width: 1100px;
+  margin: 90px auto 40px;
+  padding: 0 20px;
 }
 
-.home-content button {
-  margin-top: 15px;
-  padding: 12px 22px;
-  background: #f4b400;
-  border: none;
-  font-weight: bold;
-  cursor: pointer;
-}
 
-/* ===== FULL SCREEN MOBILE MENU ===== */
-.menu-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.95);
-  z-index: 999;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 
-.overlay-menu {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+/* =========================================
+   HEADER
+========================================= */
+.page-header {
   text-align: center;
+  margin-bottom: 30px;
 }
 
-.overlay-menu li {
-  color: white;
-  font-size: 22px;
-  margin: 18px 0;
-  cursor: pointer;
+.page-header h1 {
+  font-size: 2rem;
+  color: #111;
 }
 
-.overlay-menu li:hover {
-  color: #f4b400;
+.page-header p {
+  font-size: 1rem;
+  color: #444;
 }
 
-.close-btn {
-  position: absolute;
-  top: 22px;
-  right: 26px;
-  font-size: 30px;
-  color: white;
-  cursor: pointer;
+/* =========================================
+   SEARCH
+========================================= */
+.search-box {
+  max-width: 400px;
+  margin: 0 auto 25px;
 }
 
-/* ===== MOBILE RESPONSIVE ===== */
+.search-box input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+}
+
+/* =========================================
+   GRID
+========================================= */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+/* =========================================
+   CARDS (FINAL FIX ✅)
+========================================= */
+
+.card {
+  background: #ffffff;
+  padding: 18px;
+  border-radius: 16px;
+
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+
+  display: flex;
+  flex-direction: column;
+
+  transition: all 0.25s ease;
+}
+
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.25);
+}
+
+.card h3 {
+  margin-bottom: 6px;
+}
+
+/* META */
+.meta {
+  font-size: 0.85rem;
+  color: #2f80ed;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+/* =========================================
+   LOGO IMAGE
+========================================= */
+
+.logo {
+  display: block;
+  width: 100%;
+  height: 120px;
+  object-fit: contain;
+  background: #f4f8ff;
+  border-radius: 10px;
+  padding: 8px;
+  margin-bottom: 12px;
+  box-sizing: border-box; /* ✅ VERY IMPORTANT */
+}
+
+/* =========================================
+   CONTACT
+========================================= */
+
+.contact {
+  margin-top: auto;
+  padding-top: 12px;
+  border-top: 1px solid #eee;
+}
+
+.contact p {
+  display: flex;
+  gap: 6px;
+  font-size: 0.85rem;
+  margin: 5px 0;
+}
+
+/* =========================================
+   MOBILE
+========================================= */
+
 @media (max-width: 768px) {
   .nav-links.desktop {
     display: none;
@@ -135,716 +338,384 @@ body {
   .hamburger {
     display: block;
     position: absolute;
+    right: 20px;
     top: 18px;
-    right: 22px;
     font-size: 26px;
-    color: white;
     cursor: pointer;
   }
-
-  .home-content {
-    position: relative;
-    bottom: auto;
-    left: auto;
-    padding: 140px 20px 0;
-    text-align: center;
-  }
-
-  .home-content h1 {
-    font-size: 2rem;
-  }
-
-  .home-content button {
-    width: 100%;
-  }
 }
 
-.card-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 20px;
-}
+/* ===== TRUE WELCOME SCREEN (MATCHING YOUR DESIGN) ===== */
 
-.destination-card {
-  background: white;
-  border-radius: 10px;
-  padding: 10px;
-  cursor: pointer;
-}
-
-.destination-card img {
-  width: 100%;
-  border-radius: 10px;
-}
-
-/* DESTINATIONS GRID */
-.card-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 20px;
-}
-
-.destination-card {
-  background: white;
-  border-radius: 10px;
-  padding: 10px;
-  cursor: pointer;
-  transition: transform 0.2s ease;
-}
-
-.destination-card:hover {
-  transform: translateY(-4px);
-}
-
-.destination-card img {
-  width: 100%;
-  border-radius: 10px;
-}
-
-.destination-card h3 {
-  margin: 10px 0 5px;
-}
-
-.destination-card p {
-  font-size: 0.9rem;
-  line-height: 1.4;
-}
-
-/* =========================
-   BOOKING PAGE
-========================= */
-
-.booking-page {
-  background: #f5f7fa;
-}
-
-.booking-wrapper {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 30px;
-  align-items: start;
-}
-
-/* Destination Panel */
-.booking-destination {
-  background: white;
-  padding: 20px;
-  border-radius: 12px;
-}
-
-.booking-image {
-  width: 100%;
-  border-radius: 12px;
-  margin-bottom: 15px;
-}
-
-.booking-destination h2 {
-  margin-bottom: 10px;
-}
-
-.booking-destination p {
-  font-size: 0.95rem;
-  line-height: 1.5;
-}
-
-/* Booking Card */
-.booking-card {
-  background: white;
-  padding: 25px;
-  border-radius: 12px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-}
-
-.booking-card h3 {
-  margin-bottom: 15px;
-}
-
-/* Booking Form */
-.booking-form {
+.welcome-screen {
+  height: 100vh;
   display: flex;
-  flex-direction: column;
-  gap: 12px;
+  justify-content: center;
+  align-items: center;
+
+  /* LIGHT CLEAN BACKGROUND */
+  background: linear-gradient(to bottom, #f9fbfd, #eef5fb, #eaf4ff);
 }
 
-.booking-form label {
-  font-size: 0.9rem;
-  font-weight: 600;
-}
-
-.booking-form input {
-  padding: 10px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  font-size: 0.95rem;
-}
-
-.booking-form button {
-  margin-top: 10px;
-  padding: 12px;
-  background: #f4b400;
-  border: none;
-  font-weight: bold;
-  cursor: pointer;
-  border-radius: 8px;
-}
-
-@media (max-width: 768px) {
-  .booking-wrapper {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* =========================
-   FOREIGNER TOURS
-========================= */
-
-.tour-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 20px;
-}
-
-.tour-card {
-  background: white;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-}
-
-.tour-card h3 {
-  margin-bottom: 8px;
-}
-
-.tour-card ul {
-  padding-left: 18px;
-}
-
-.tour-card li {
-  font-size: 0.9rem;
-  margin-bottom: 4px;
-}
-
-/* ===== FOREIGNER TOURS PAGE ===== */
-
-.foreigner-page {
-  background: #f5f7fa;
-}
-
-.page-header {
+/*CENTERED CONTENT */
+.welcome-content {
   text-align: center;
+  max-width: 600px;
+}
+
+/* BIG LOGO */
+.welcome-logo {
+  width: 300px;
   margin-bottom: 30px;
 }
 
-.page-header h1 {
-  font-size: 2rem;
-  margin-top: 80px; /* pushes below navbar */
-}
-
-.tour-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 20px;
-}
-
-.tour-card {
-  background: white;
-  padding: 20px;
-  border-radius: 12px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  min-height: 520px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-}
-
-.tour-card h3 {
+/* SMALL TEXT */
+.welcome-small {
+  font-size: 1.1rem;
+  color: #888;
   margin-bottom: 5px;
 }
 
-.rating,
-.location {
-  font-size: 0.9rem;
-  margin-bottom: 5px;
-}
-
-.tour-card ul {
-  padding-left: 18px;
-  margin-bottom: 15px;
-}
-
-.tour-card li {
-  font-size: 0.9rem;
-}
-
-.whatsapp-btn {
-  margin-top: auto;       /* 🔑 keeps all buttons in a straight line */
-  padding: 12px;
-  width: 100%;
-  background: #25D366;
-  color: white;
-  font-weight: bold;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-}
-
-.whatsapp-btn:hover {
-  background: #1ebe5d;
-}
-
-/* ===== FOREIGNER TOURS PAGE ===== */
-
-.page-header {
-  text-align: center;
-  margin: 90px 0 30px;
-}
-
-.tour-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 20px;
-}
-
-.tour-card {
-  background: #fff;
-  border-radius: 14px;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  min-height: 560px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-}
-
-/* LOGO HANDLING */
-.tour-logo {
-  height: 120px;
-  background: #f1f3f5;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 12px;
-}
-
-.tour-logo img {
-  max-width: 90%;
-  max-height: 90%;
-  object-fit: contain;
-}
-
-/* BUTTON ALIGNMENT */
-.whatsapp-btn {
-  margin-top: auto; /* THIS keeps them in a straight line */
-  padding: 12px;
-  border: none;
-  border-radius: 8px;
-  background: #25d366;
-  color: white;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.whatsapp-btn:hover {
-  background: #1ebe5d;
-}
-
-/* ===== SHARED PAGE HEADER ===== */
-
-.page-header {
-  text-align: center;
-  margin: 90px 20px 40px;
-}
-
-.page-header h1 {
-  font-size: 2rem;
-  margin-bottom: 8px;
-}
-
-.page-header p {
-  font-size: 1rem;
-  color: #555;
-  max-width: 720px;
-  margin: 0 auto;
-}
-
-/* ===== DESTINATIONS PAGE ===== */
-
-.destinations-page {
-  background: #f5f7fa;
-}
-
-.destination-card.enhanced {
-  background: white;
-  border-radius: 14px;
-  overflow: hidden;
-  cursor: pointer;
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-  display: flex;
-  flex-direction: column;
-}
-
-.destination-card.enhanced:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 14px 30px rgba(0,0,0,0.12);
-}
-
-.destination-card.enhanced img {
-  width: 100%;
-  height: 180px;
-  object-fit: cover;
-}
-
-.destination-content {
-  padding: 16px;
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-}
-
-.destination-content h3 {
-  margin-bottom: 8px;
-}
-
-.destination-content p {
-  font-size: 0.95rem;
-  line-height: 1.5;
-  color: #444;
-}
-
-.explore-link {
-  margin-top: auto;
-  font-weight: bold;
-  color: #0066cc;
-  font-size: 0.9rem;
-}
-
-/* ===== FOREIGNER TOURS ENHANCED ===== */
-
-.foreigner-page {
-  background: #f5f7fa;
-}
-
-.tour-card.enhanced {
-  background: white;
-  border-radius: 14px;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-}
-
-.tour-card.enhanced:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 14px 30px rgba(0,0,0,0.12);
-}
-
-.tour-content {
-  flex-grow: 1;
-}
-
-.tagline {
-  display: block;
-  font-size: 0.9rem;
-  color: #666;
-  margin-bottom: 6px;
-}
-
-.tour-card ul {
-  padding-left: 18px;
-  margin-top: 8px;
-}
-
-.explore-link {
-  display: block;
-  margin-top: 10px;
-  font-weight: bold;
-  color: #0066cc;
-  font-size: 0.9rem;
-}
-
-/* BUTTON ALIGNMENT (same as Destinations philosophy) */
-.whatsapp-btn {
-  margin-top: auto;
-}
-
-/* ===== BOOKING PAGE ===== */
-
-.booking-page {
-  background: #f5f7fa;
-}
-
-.booking-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 24px;
-  max-width: 1000px;
-  margin: 0 auto;
-}
-
-.booking-card {
-  background: white;
-  border-radius: 14px;
-  padding: 20px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-}
-
-.destination-summary img {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-  border-radius: 10px;
-  margin-bottom: 14px;
-}
-
-.summary-content h3 {
-  margin-bottom: 6px;
-}
-
-.summary-content p {
-  font-size: 0.95rem;
-  line-height: 1.5;
-  color: #444;
-}
-
-.summary-note {
-  display: block;
-  margin-top: 12px;
-  font-size: 0.85rem;
-  color: #666;
-}
-
-.booking-form {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.booking-form label {
-  font-size: 0.9rem;
-  font-weight: 600;
-}
-
-.booking-form input {
-  padding: 10px;
-  font-size: 0.95rem;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-}
-
-.booking-info {
-  font-size: 0.85rem;
-  color: #555;
-}
-
-@media (max-width: 768px) {
-  .booking-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* =========================
-   ACCOMMODATIONS – POLISHED
-========================= */
-
-.accommodations-page {
-  background: #f5f7fa;
-}
-
-/* SEARCH BAR */
-.search-box {
-  max-width: 420px;
-  margin: 0 auto 40px;
-}
-
-.search-box input {
-  width: 100%;
-  padding: 12px 16px;
-  font-size: 0.95rem;
-  border-radius: 10px;
-  border: 1px solid #ccc;
-}
-
-/* ACCOMMODATION CARD */
-.accommodation-card.enhanced {
-  background: white;
-  border-radius: 16px;
-  padding: 22px;
-  display: flex;
-  flex-direction: column;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-}
-
-.accommodation-card.enhanced:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 16px 35px rgba(0,0,0,0.12);
-}
-
-/* CARD HEADER */
-.accommodation-content h3 {
-  margin-bottom: 6px;
-  font-size: 1.05rem;
-}
-
-.accommodation-content .meta {
-  font-size: 0.85rem;
-  color: #777;
-  margin-bottom: 12px;
-}
-
-/* DESCRIPTION */
-.accommodation-content p {
-  font-size: 0.95rem;
-  line-height: 1.55;
-  color: #444;
+/* MAIN TITLE */
+.welcome-title {
+  font-size: 3rem;
+  font-weight: 700;
+  color: #2f80ed;
   margin-bottom: 10px;
 }
 
-/* CONTACT SECTION */
-.accommodation-content p strong {
-  color: #000;
+/* DECORATIVE DIVIDER */
+.welcome-divider {
+  width: 50px;
+  height: 4px;
+  background: #43c6ac;
+  border-radius: 4px;
+  margin: 15px auto;
 }
 
-/* LINKS */
-.accommodation-content a {
-  color: #0066cc;
+/* DESCRIPTION */
+.welcome-text {
+  font-size: 1.1rem;
+  color: #666;
+  margin-bottom: 30px;
+}
+
+/* BUTTON (MATCHES IMAGE STYLE) */
+.start-btn {
+  padding: 16px 40px;
+  border: none;
+  border-radius: 40px;
+  background: linear-gradient(90deg, #2f80ed, #1c5aa6);
+  color: white;
   font-weight: bold;
-  text-decoration: none;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
-.accommodation-content a:hover {
-  text-decoration: underline;
+.start-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
 }
 
-/* CONTACT GROUPING */
-.accommodation-content p:last-child,
-.accommodation-content p:nth-last-child(2),
-.accommodation-content p:nth-last-child(3) {
-  margin-bottom: 6px;
+/*Login and Signup pages*/
+.auth-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow-y: auto;
+  background: linear-gradient(to bottom, #f9fbfd, #eef5fb, #eaf4ff);
 }
 
-/* OPTIONAL ICON FEEL (subtle) */
-.accommodation-content p:has(strong) {
-  padding-top: 6px;
-  border-top: 1px solid #eee;
-  margin-top: 12px;
+/* ===== AUTH CARD ===== */
+
+.auth-card {
+  max-width: 400px;
+  background: white;
+  border-radius: 24px;
+  padding: 35px 40px;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: auto;
 }
 
+/* LOGO */
+.auth-logo {
+  width: 200px;
+  margin-bottom: 15px;
+}
+
+/* SUBTEXT */
+.auth-sub {
+  color: #666;
+  margin-bottom: 20px;
+}
+
+/* INPUT BOX */
+.input-box {
+  display: flex;
+  align-items: center;
+  max-width: 300px;
+  width: 100%;
+  margin-bottom: 15px;
+  padding: 12px;
+  border-radius: 12px;
+  background: #f3f6fb;
+  margin: 0 auto 15px;
+}
+
+.input-box input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+
+  margin-left: 10px;
+}
+
+/* ICON LEFT */
+.input-icon {
+  color: #888;
+}
+
+/* EYE ICON */
+.eye-icon {
+  cursor: pointer;
+  color: #888;
+}
+
+/* BUTTON */
+.auth-card button {
+  width: 100%;
+  padding: 14px;
+  border-radius: 30px;
+  border: none;
+  background: linear-gradient(90deg, #2f80ed, #43c6ac);
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.auth-card button:hover {
+  opacity: 0.9;
+}
+
+.auth-switch {
+  margin-top: 20px;
+  font-size: 14px;
+  color: #666;
+}
+
+.auth-switch span {
+  color: #2f80ed;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* ROW FOR SIDE-BY-SIDE INPUTS */
+.input-row {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.input-row .input-box {
+  flex: 1;
+}
+
+/* ✅ MOBILE STACK FIX */
 @media (max-width: 768px) {
-  .search-box {
-    max-width: 100%;
+  .input-row {
+    flex-direction: column;
   }
 }
 
-/* =========================
-   ACCOMMODATIONS – CONTACT REFINEMENT
-========================= */
+/* ===== RESPONSIVE DESIGN ===== */
 
-/* Group contact info into a visual footer */
-.accommodation-content {
-  display: flex;
-  flex-direction: column;
+@media (max-width: 768px) {
+  /* AUTH CARD */
+  .auth-card {
+    width: 90%;
+    max-width: 340px;
+    padding: 25px;
+  }
+
+  /* LOGO */
+  .auth-logo {
+    width: 140px;
+  }
+
+  /* INPUTS */
+  .input-box {
+    padding: 10px;
+  }
+
+  .input-box input {
+    font-size: 14px;
+  }
+
+  /* BUTTON */
+  .auth-card button {
+    padding: 12px;
+    font-size: 14px;
+  }
+
+  /* TEXT */
+  .auth-sub {
+    font-size: 14px;
+  }
+
+  .auth-switch {
+    font-size: 13px;
+  }
+
+  /* WELCOME SCREEN */
+  .welcome-logo {
+    width: 200px;
+  }
+
+  .welcome-title {
+    font-size: 2.2rem;
+  }
+
+  .welcome-text {
+    font-size: 0.95rem;
+  }
+
+  .start-btn {
+    padding: 14px 28px;
+    font-size: 0.9rem;
+  }
 }
 
-/* Footer separator */
-.accommodation-content .contact-section {
-  margin-top: auto;
-  padding-top: 14px;
-  border-top: 1px solid #eee;
+@media (max-width: 992px) {
+  .auth-card {
+    width: 90%;
+    max-width: 360px;
+  }
+
+  .welcome-logo {
+    width: 240px;
+  }
+
+  .welcome-title {
+    font-size: 2.6rem;
+  }
+
+  .home-content h1 {
+    font-size: 2.8rem;
+  }
 }
 
-/* Contact text styling */
-.contact-section p {
-  font-size: 0.85rem;
-  color: #555;
-  margin-bottom: 6px;
-  line-height: 1.4;
+@media (max-width: 480px) {
+  .auth-card {
+    width: 92%;
+    padding: 20px;
+  }
+
+  .auth-logo {
+    width: 120px;
+  }
+
+  .welcome-logo {
+    width: 170px;
+  }
+
+  .welcome-title {
+    font-size: 2rem;
+  }
+
+  .welcome-text {
+    font-size: 0.85rem;
+  }
+
+  .start-btn {
+    width: 100%;
+    padding: 12px;
+  }
+}
+.auth-switch {
+  margin-top: 18px;
+  font-size: 13px;
 }
 
-/* Handle long email + URLs safely */
-.contact-section a {
-  display: inline-block;
-  max-width: 100%;
-  word-break: break-all;      /* KEY FIX */
-  overflow-wrap: anywhere;   /* modern fallback */
-  color: #0066cc;
+.auth-switch span {
+  color: #2F80ED;
   font-weight: 600;
-  text-decoration: none;
 }
+/* ===== PROFILE SECTION ===== */
 
-.contact-section a:hover {
-  text-decoration: underline;
-}
-
-/* Label emphasis */
-.contact-section strong {
-  color: #000;
-  font-weight: 600;
-}
-
-/* =========================
-   ACCOMMODATIONS – ICON CONTACT
-========================= */
-
-.contact-section {
-  margin-top: auto;
-  padding-top: 14px;
-  border-top: 1px solid #eee;
-}
-
-.contact-section p {
-  display: flex;
-  align-items: flex-start;
-  gap: 6px;
-  font-size: 0.85rem;
-  color: #555;
-  margin-bottom: 6px;
-  line-height: 1.4;
-}
-
-/* Icon styling */
-.contact-section .icon {
-  width: 18px;
-  flex-shrink: 0;
-  line-height: 1.4;
-}
-
-/* Long email / URL safety */
-.contact-section a {
-  word-break: break-all;
-  overflow-wrap: anywhere;
-  color: #0066cc;
-  font-weight: 600;
-  text-decoration: none;
-}
-
-.contact-section a:hover {
-  text-decoration: underline;
-}
-
-.contact-section strong {
-  font-weight: 600;
-  color: #000;
-}
-
-/* =========================
-   CAR RENTAL LOGOS
-========================= */
-
-.logo-box {
-  height: 90px;
-  background: #f1f3f5;
-  border-radius: 12px;
+.profile-section {
+  position: relative;
   display: flex;
   align-items: center;
-  justify-content: center;
-  margin-bottom: 14px;
+  z-index: 10000;
 }
 
-.logo-box img {
-  max-width: 85%;
-  max-height: 70px;
-  object-fit: contain;
+/* 👤 icon */
+.profile-icon {
+  font-size: 30px;
+  color: #2f80ed;
+  cursor: pointer;
+  margin-left: 20px;
+  transition: all 0.25s ease;
+}
+
+.profile-icon:hover {
+  transform: scale(1.15);
+  color: #1b5fc9;
+}
+
+/* dropdown */
+.profile-dropdown {
+  position: absolute;
+  top: 50px;
+  right: 0;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 14px;
+  padding: 15px;
+  width: 200px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.25s ease;
+}
+
+.profile-dropdown p {
+  margin: 0 0 12px;
+  font-weight: 500;
+}
+
+.profile-dropdown button {
+  width: 100%;
+  padding: 10px;
+  background: #2f80ed;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.profile-dropdown button:hover {
+  background: #1b5fc9;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

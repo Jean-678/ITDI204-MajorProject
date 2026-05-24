@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react";
+import { FaMapMarkerAlt, FaPhone, FaEnvelope, FaGlobe } from "react-icons/fa";
+
 import avis from "../images/car_logos/avisvanuatu.png";
 import budget from "../images/car_logos/budgetvanuatu.png";
 import europcar from "../images/car_logos/europcar.jpg";
@@ -19,27 +21,27 @@ function CarRentals() {
   useEffect(() => {
     fetch("http://localhost:5000/car-rentals")
       .then(res => res.json())
-      .then(data => setRentals(data))
-      .catch(err => console.error("Error fetching car rentals:", err));
+      .then(data => setRentals(data));
   }, []);
 
-  const logos = {
-    "World Car Rentals Vanuatu": worldcar,
-    "Europcar Vanuatu": europcar,
-    "Avis Vanuatu": avis,
-    "Hertz Car Rental": hertz,
-    "Budget Vanuatu": budget,
-    "On Wheels Vanuatu": onwheels,
-    "Go2Rent": go2rent,
-    "Global Drive Car Rentals": globaldrive,
-    "GLOBAL DRIVE CAR RENTALS": globaldrive,
-    "Santo Tropical Car Rentals": santotropical,
-    "Pacific Car Hire Santo": pacificcarhire,
-    "Pacific Car Hire": pacificcarhire,
-    "Santo Car Hire": santocarhire,
-    "Wanderlust Rentals & Tours": wanderlust,
-    "Wanderlust Rental & Tours": wanderlust
-  };
+  const getLogo = (name) => {
+  const n = name.toLowerCase();
+
+  if (n.includes("world car")) return worldcar;
+  if (n.includes("europcar")) return europcar;
+  if (n.includes("avis")) return avis;
+  if (n.includes("hertz")) return hertz;
+  if (n.includes("budget")) return budget;
+  if (n.includes("on wheels")) return onwheels;
+  if (n.includes("go2rent")) return go2rent;
+  if (n.includes("global drive")) return globaldrive;
+  if (n.includes("santo tropical")) return santotropical;
+  if (n.includes("pacific car")) return pacificcarhire;
+  if (n.includes("santo car")) return santocarhire;
+  if (n.includes("wanderlust")) return wanderlust;
+
+  return null;
+};
 
   const filtered = rentals.filter(r =>
     `${r.name} ${r.location} ${r.services}`
@@ -48,16 +50,16 @@ function CarRentals() {
   );
 
   return (
-    <div className="page accommodations-page">
+    <div className="page cars-page">
       <div className="page-header">
         <h1>Car Rentals</h1>
-        <p>Compare trusted car rental companies across Vanuatu.</p>
+        <p>Compare trusted rental companies.</p>
       </div>
 
       <div className="search-box">
         <input
           type="text"
-          placeholder="Search car rentals…"
+          placeholder="Search rentals..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
@@ -65,46 +67,27 @@ function CarRentals() {
 
       <div className="card-grid">
         {filtered.map((r, i) => (
-          <div key={i} className="accommodation-card enhanced">
+          <div key={i} className="card">
 
-            <div className="logo-box">
-              {logos[r.name] && (
-                <img src={logos[r.name]} alt={`${r.name} logo`} />
+            {getLogo(r.name) && (
+  <img className="logo" src={getLogo(r.name)} alt={r.name} />
+)}
+
+            <h3>{r.name}</h3>
+            <p className="meta">{r.location}</p>
+            <p>{r.services}</p>
+
+            <div className="contact">
+              <p><FaMapMarkerAlt /> {r.address}</p>
+              <p><FaPhone /> {r.phone}</p>
+
+              {r.email && (
+                <p><FaEnvelope /> <a href={`mailto:${r.email}`}>{r.email}</a></p>
               )}
+
+              <p><FaGlobe /> <a href={r.website} target="_blank" rel="noreferrer">Visit</a></p>
             </div>
 
-            <div className="accommodation-content">
-              <h3>{r.name}</h3>
-              <p className="meta">{r.location}</p>
-              <p>{r.services}</p>
-
-              <div className="contact-section">
-                <p>
-                  <span className="icon">📍</span>
-                  {r.address}
-                </p>
-
-                <p>
-                  <span className="icon">📞</span>
-                  {r.phone}
-                </p>
-
-                {r.email && (
-                  <p>
-                    <span className="icon">✉️</span>
-                    <a href={`mailto:${r.email}`}>
-                      {r.email}
-                    </a>
-                  </p>
-                )}
-
-                <p>
-                  <a href={r.website} target="_blank" rel="noopener noreferrer">
-                    Visit official site
-                  </a>
-                </p>
-              </div>
-            </div>
           </div>
         ))}
       </div>

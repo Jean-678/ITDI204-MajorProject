@@ -32,3 +32,61 @@ app.get("/tours", async (req, res) => {
   const result = await pool.query("SELECT * FROM tour_operators");
   res.json(result.rows);
 });
+
+app.post("/signup", async (req, res) => {
+  const { name, email, password } = req.body;
+
+  try {
+    // check if user exists
+    const existing = await pool.query(
+      "SELECT * FROM users WHERE email = $1",
+      [email]
+    );
+
+    if (existing.rows.length > 0) {
+      return res.json({ error: "User already exists" });
+    }
+
+    // insert user
+    const result = await pool.query(
+      "INSERT INTO users (name, email, password) VALUES ($1, $2, $3) RETURNING *",
+      [name, email, password]
+    );
+
+    res.json({
+      message: "Signup successful",
+      user: result.rows[0]
+    });
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Server error during signup" });
+  }
+});
+
+app.post("/login", async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
+    const result = await pool.query(
+      "SELECT * FROM users WHERE email = $1",
+      [email]
+    );
+
+    if (result.rows.length === 0) {
+      return res.json({ error: "User not found" });
+    }
+
+    const user = result.rows[0];
+
+    if (user.password !== password) {
+      return res.json({ error: "Incorrect password" });
+    }
+
+    res.json({ user });
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Server error during login" });
+  }
+});
