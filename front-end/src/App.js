@@ -6,15 +6,13 @@ import Accommodations from "./components/Accommodations";
 import CarRentals from "./components/CarRentals";
 import AuthModal from "./components/AuthModal";
 import WelcomeScreen from "./components/WelcomeScreen";
+import Profile from "./components/Profile";
 import "./App.css";
 
 function App() {
   const [page, setPage] = useState("home");
-
   const [user, setUser] = useState(null);
   const [authMode, setAuthMode] = useState("login");
-
-  // ✅ ADD THIS
   const [showAuth, setShowAuth] = useState(false);
 
   useEffect(() => {
@@ -22,11 +20,11 @@ function App() {
     if (stored) setUser(JSON.parse(stored));
   }, []);
 
-  // ✅ LOCK SCREEN
+  // LOCK SCREEN
 if (!user) {
   return (
     <>
-      {/* ✅ SHOW ONLY WELCOME */}
+      {/*SHOW ONLY WELCOME */}
       {!showAuth && (
         <WelcomeScreen
           onStart={() => {
@@ -36,7 +34,7 @@ if (!user) {
         />
       )}
 
-      {/* ✅ SHOW ONLY LOGIN (NOT BELOW, ONLY WHEN TRIGGERED) */}
+      {/* SHOW ONLY LOGIN (NOT BELOW, ONLY WHEN TRIGGERED) */}
       {showAuth && (
         <div className="auth-container">
           <AuthModal
@@ -62,6 +60,7 @@ if (!user) {
       {page === "tours" && <ForeignerTours />}
       {page === "accommodations" && <Accommodations />}
       {page === "cars" && <CarRentals />}
+      {page === "profile" && <Profile user={user} />}
     </>
   );
 }

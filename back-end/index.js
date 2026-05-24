@@ -34,7 +34,7 @@ app.get("/tours", async (req, res) => {
 });
 
 app.post("/signup", async (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, email, password, firstName, lastName, Country, dob } = req.body;
 
   try {
     // check if user exists
@@ -48,9 +48,13 @@ app.post("/signup", async (req, res) => {
     }
 
     // insert user
-    const result = await pool.query(
-      "INSERT INTO users (name, email, password) VALUES ($1, $2, $3) RETURNING *",
-      [name, email, password]
+    
+const result = await pool.query(
+      `INSERT INTO users 
+      (name, email, password, first_name, last_name, country, dob) 
+      VALUES ($1, $2, $3, $4, $5, $6, $7) 
+      RETURNING *`,
+      [name, email, password, firstName, lastName, country, dob]
     );
 
     res.json({
@@ -69,7 +73,15 @@ app.post("/login", async (req, res) => {
 
   try {
     const result = await pool.query(
-      "SELECT * FROM users WHERE email = $1",
+      `SELECT 
+        id,
+        name,
+        email,
+        first_name AS "firstName",
+        last_name AS "lastName",
+        country,
+        dob
+       FROM users WHERE email = $1`,
       [email]
     );
 
@@ -79,7 +91,12 @@ app.post("/login", async (req, res) => {
 
     const user = result.rows[0];
 
-    if (user.password !== password) {
+    const passwordCheck = await pool.query(
+      "SELECT password FROM users WHERE email = $1",
+      [email]
+    );
+
+    if (passwordCheck.rows[0].password !== password) {
       return res.json({ error: "Incorrect password" });
     }
 

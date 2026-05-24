@@ -7,6 +7,12 @@ function Login({ onAuthSuccess, setMode }) {
   const [show, setShow] = useState(false);
 
   const handleLogin = async () => {
+
+if (!email || !password) {
+    alert("Please enter both email and password");
+    return;
+  }
+
     const res = await fetch("http://localhost:5000/login", {
       method: "POST",
       headers: {
@@ -18,9 +24,18 @@ function Login({ onAuthSuccess, setMode }) {
     const data = await res.json();
 
     if (data.user) {
-      onAuthSuccess(data.user);
+      if (data.user) {
+  const stored = localStorage.getItem("user");
+
+  if (stored) {
+    const fullUser = JSON.parse(stored);
+    onAuthSuccess(fullUser);
+  } else {
+    onAuthSuccess(data.user);
+  }
+}
     } else {
-      alert(data.error);
+      alert(data.error || "Login failed");
     }
   };
 
@@ -32,7 +47,6 @@ function Login({ onAuthSuccess, setMode }) {
       <h2>Welcome Back!</h2>
       <p className="auth-sub">Login to your account</p>
 
-      {/* EMAIL */}
       <div className="input-box">
         <FaEnvelope className="input-icon" />
         <input
@@ -43,7 +57,6 @@ function Login({ onAuthSuccess, setMode }) {
         />
       </div>
 
-      {/* PASSWORD */}
       <div className="input-box">
         <FaLock className="input-icon" />
         <input
@@ -57,12 +70,13 @@ function Login({ onAuthSuccess, setMode }) {
 
       <button onClick={handleLogin}>Login →</button>
 
-<p className="auth-switch">
-  Don't have an account?{" "}
-  <span onClick={() => setMode("signup")}>
-    Sign Up
-  </span>
-</p>
+      <p className="auth-switch">
+        Don't have an account?{" "}
+        <span onClick={() => setMode("signup")}>
+          Sign Up
+        </span>
+      </p>
+
     </div>
   );
 }

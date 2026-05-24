@@ -28,14 +28,27 @@ function Signup({ onAuthSuccess, setMode }) {
       body: JSON.stringify({
         name: fullName,
         email,
-        password
+        password,
+        firstName,
+        lastName,
+        country,
+        dob
       })
     });
 
     const data = await res.json();
 
     if (data.user) {
-      onAuthSuccess(data.user);
+      // STORE FULL USER OBJECT
+      const fullUser = {
+        ...data.user,
+        firstName,
+        lastName,
+        country,
+        dob
+      };
+
+      onAuthSuccess(fullUser);
     } else {
       alert(data.error);
     }
@@ -47,30 +60,31 @@ function Signup({ onAuthSuccess, setMode }) {
       <img src="/main_logo.png" className="auth-logo" alt="logo" />
 
       <h2>Create Account</h2>
-      <p className="auth-sub">JoinVanuatu Centralized Booking System</p>
+      <p className="auth-sub">
+        Join Vanuatu Centralized Booking System
+      </p>
 
-      {/* ✅ FIRST + LAST NAME ROW */}
-      <div className="input-row">
-        <div className="input-box">
-          <FaUser className="input-icon" />
-          <input
-            placeholder="First name"
-            value={firstName}
-            onChange={(e) => setFirstName(e.target.value)}
-          />
-        </div>
-
-        <div className="input-box">
-          <FaUser className="input-icon" />
-          <input
-            placeholder="Last name"
-            value={lastName}
-            onChange={(e) => setLastName(e.target.value)}
-          />
-        </div>
+      {/* FIRST NAME */}
+      <div className="input-box">
+        <FaUser className="input-icon" />
+        <input
+          placeholder="First name"
+          value={firstName}
+          onChange={(e) => setFirstName(e.target.value)}
+        />
       </div>
 
-      {/* ✅ COUNTRY */}
+      {/* LAST NAME */}
+      <div className="input-box">
+        <FaUser className="input-icon" />
+        <input
+          placeholder="Last name"
+          value={lastName}
+          onChange={(e) => setLastName(e.target.value)}
+        />
+      </div>
+
+      {/* COUNTRY */}
       <div className="input-box">
         <FaGlobe className="input-icon" />
         <input
@@ -80,7 +94,7 @@ function Signup({ onAuthSuccess, setMode }) {
         />
       </div>
 
-      {/* ✅ DATE OF BIRTH */}
+      {/* DOB */}
       <div className="input-box">
         <FaCalendarAlt className="input-icon" />
         <input
@@ -90,7 +104,7 @@ function Signup({ onAuthSuccess, setMode }) {
         />
       </div>
 
-      {/* ✅ EMAIL */}
+      {/* EMAIL */}
       <div className="input-box">
         <FaEnvelope className="input-icon" />
         <input
@@ -100,7 +114,7 @@ function Signup({ onAuthSuccess, setMode }) {
         />
       </div>
 
-      {/* ✅ PASSWORD */}
+      {/* PASSWORD */}
       <div className="input-box">
         <FaLock className="input-icon" />
         <input
@@ -113,12 +127,15 @@ function Signup({ onAuthSuccess, setMode }) {
       </div>
 
       <button onClick={handleSignup}>Sign Up →</button>
-<p className="auth-switch">
-  Already have an account?{" "}
-  <span onClick={() => setMode("login")}>
-    Login
-  </span>
-</p>
+
+      {/* SWITCH */}
+      <p className="auth-switch">
+        Already have an account?{" "}
+        <span onClick={() => setMode("login")}>
+          Login
+        </span>
+      </p>
+
     </div>
   );
 }

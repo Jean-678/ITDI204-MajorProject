@@ -36,7 +36,7 @@ function Navbar({ setPage }) {
 
   return (
     <>
-      {/* ✅ NAVBAR */}
+      {/* NAVBAR */}
       <nav className="navbar">
         <ul className="nav-links desktop">
           <li onClick={() => goTo("home")}>Home</li>
@@ -60,6 +60,18 @@ function Navbar({ setPage }) {
               {profileOpen && (
                 <div className="profile-dropdown">
                   <p>Welcome, {user.name}</p>
+
+                  {/* ✅ NEW: GO TO PROFILE */}
+                  <p
+                    className="profile-link"
+                    onClick={() => {
+                      setProfileOpen(false);
+                      goTo("profile");
+                    }}
+                  >
+                    View Profile
+                  </p>
+
                   <button onClick={handleLogout}>Logout</button>
                 </div>
               )}
@@ -67,7 +79,7 @@ function Navbar({ setPage }) {
           )}
         </ul>
 
-        {/* ✅ HAMBURGER */}
+        {/* HAMBURGER */}
         <div className="hamburger" onClick={() => setOpen(true)}>
           ☰
         </div>
@@ -78,12 +90,7 @@ function Navbar({ setPage }) {
         <div className="menu-overlay">
           <div className="side-menu">
 
-            {/* CLOSE */}
-            <div className="close-btn" onClick={() => setOpen(false)}>
-              ✕
-            </div>
-
-            {/* PROFILE */}
+            {/* PROFILE HEADER */}
             {user && (
               <div className="menu-profile">
                 <FaUserCircle className="menu-avatar" />
@@ -112,6 +119,14 @@ function Navbar({ setPage }) {
                 <FaCar className="menu-icon" />
                 <span>Car Rentals</span>
               </li>
+
+              {/* ✅ NEW: PROFILE PAGE IN MOBILE */}
+              {user && (
+                <li onClick={() => goTo("profile")}>
+                  <FaUserCircle className="menu-icon" />
+                  <span>Profile</span>
+                </li>
+              )}
 
               {/* LOGOUT */}
               {user && (

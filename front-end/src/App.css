@@ -214,8 +214,6 @@ background: linear-gradient(
   padding: 0 20px;
 }
 
-
-
 /* =========================================
    HEADER
 ========================================= */
@@ -352,8 +350,6 @@ background: linear-gradient(
   display: flex;
   justify-content: center;
   align-items: center;
-
-  /* LIGHT CLEAN BACKGROUND */
   background: linear-gradient(to bottom, #f9fbfd, #eef5fb, #eaf4ff);
 }
 
@@ -662,7 +658,6 @@ background: linear-gradient(
   z-index: 10000;
 }
 
-/* 👤 icon */
 .profile-icon {
   font-size: 30px;
   color: #2f80ed;
@@ -707,6 +702,83 @@ background: linear-gradient(
 
 .profile-dropdown button:hover {
   background: #1b5fc9;
+}
+
+.profile-link {
+  cursor: pointer;
+  margin: 8px 0;
+  color: #2F80ED;
+  font-weight: 500;
+}
+
+.profile-link:hover {
+  text-decoration: underline;
+}
+
+.profile-card input {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
+
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.cancel-btn {
+  background: #ccc;
+  color: #333;
+  margin-top: 8px;
+}
+
+.profile-avatar {
+  font-size: 80px;
+  color: #2F80ED;
+  margin-bottom: 10px;
+}
+
+/* reuse same style system */
+.profile-btn {
+  width: 100%;
+  padding: 12px;
+  border-radius: 30px;
+  border: none;
+
+  background: linear-gradient(
+    90deg,
+    #2F80ED,
+    #43C6AC
+  );
+
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.profile-image-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.profile-image {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 10px;
+}
+
+.upload-btn {
+  font-size: 14px;
+  color: #2F80ED;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.upload-btn:hover {
+  text-decoration: underline;
 }
 
 @keyframes fadeIn {

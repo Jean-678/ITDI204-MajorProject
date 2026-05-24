@@ -2,6 +2,10 @@
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
     full_name TEXT NOT NULL,
+    first_name TEXT NOT NULL,
+    last_name TEXT NOT NULL,
+    country TEXT,
+    dob DATE,
     email TEXT UNIQUE NOT NULL,
     password TEXT NOT NULL,  -- In production, this should be hashed
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
