@@ -25,7 +25,6 @@ function ForeignerTours() {
       .then(data => setTours(data));
   }, []);
 
-  // ✅ GET LOGO BASED ON TOUR NAME
   const getLogo = (name) => {
   const n = name.toLowerCase();
 

@@ -78,7 +78,6 @@ function Accommodations() {
         {filtered.map((place, index) => (
           <div key={index} className="card">
 
-            {/* ✅ IMAGE (ADDED SAME WAY AS OTHERS) */}
             {getLogo(place.name) && (
               <img className="logo" src={getLogo(place.name)} alt={place.name} />
             )}
