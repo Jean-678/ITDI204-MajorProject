@@ -1,1 +1,0 @@
-# itdi204-vanuatu-centralized-tourism-spa
