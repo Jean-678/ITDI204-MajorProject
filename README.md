@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # itdi204-vanuatu-centralized-tourism-spa
 # Vanuatu Centralized Booking System
 
@@ -15,3 +16,6 @@ This project is a centralized booking system for Vanuatu. It allows users to man
 ### 1. Install dependencies
 ```bash
 npm install
+=======
+# ITDI204-MajorProject
+>>>>>>> 0db9dbf834311a7c08664b9ed48c0cc422945930
