@@ -20,7 +20,7 @@ function Signup({ onAuthSuccess, setMode }) {
   const handleSignup = async () => {
     const fullName = firstName + " " + lastName;
 
-    const res = await fetch("http://localhost:5000/signup", {
+    const res = await fetch((process.env.REACT_APP_API_URL || "http://localhost:5000") + "/signup", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
