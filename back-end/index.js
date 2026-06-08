@@ -9,8 +9,8 @@ app.use(express.json());
 const pool = new Pool({
   user: "postgres",
   host: "localhost",
-  database: "vanuatu_centralized_tourism_spa",
-  password: "Deni2005",
+  database: "MajorProject_db",
+  password: "petit",
   port: 5432,
 });
 
@@ -34,7 +34,7 @@ app.get("/tours", async (req, res) => {
 });
 
 app.post("/signup", async (req, res) => {
-  const { name, email, password, firstName, lastName, Country, dob } = req.body;
+  const { name, email, password, firstName, lastName, country, dob } = req.body;
 
   try {
     // check if user exists
@@ -51,7 +51,7 @@ app.post("/signup", async (req, res) => {
     
 const result = await pool.query(
       `INSERT INTO users 
-      (name, email, password, first_name, last_name, country, dob) 
+      (full_name, email, password, first_name, last_name, country, dob) 
       VALUES ($1, $2, $3, $4, $5, $6, $7) 
       RETURNING *`,
       [name, email, password, firstName, lastName, country, dob]
@@ -75,12 +75,13 @@ app.post("/login", async (req, res) => {
     const result = await pool.query(
       `SELECT 
         id,
-        name,
+        full_name AS name,
         email,
         first_name AS "firstName",
         last_name AS "lastName",
         country,
-        dob
+        dob,
+        image
        FROM users WHERE email = $1`,
       [email]
     );
@@ -105,5 +106,29 @@ app.post("/login", async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Server error during login" });
+  }
+});
+
+app.put("/update-profile", async (req, res) => {
+  const { email, firstName, lastName, country, dob, image } = req.body;
+  const fullName = firstName + " " + lastName;
+
+  try {
+    const result = await pool.query(
+      `UPDATE users 
+       SET full_name = $1, first_name = $2, last_name = $3, country = $4, dob = $5, image = $6
+       WHERE email = $7
+       RETURNING id, full_name AS name, email, first_name AS "firstName", last_name AS "lastName", country, dob, image`,
+      [fullName, firstName, lastName, country, dob, image, email]
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    res.json({ message: "Profile updated successfully", user: result.rows[0] });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Server error during profile update" });
   }
 });
