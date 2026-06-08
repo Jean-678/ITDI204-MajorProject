@@ -1,21 +1,35 @@
-<<<<<<< HEAD
-# itdi204-vanuatu-centralized-tourism-spa
 # Vanuatu Centralized Booking System
 
-## About the Project
-This project is a centralized booking system for Vanuatu. It allows users to manage and handle bookings through a simple web API built with Node.js.
+## Overview
+A tourism booking platform for Vanuatu allowing users to book accommodations, 
+car rentals, and tour packages.
 
-## Features
-- Create and manage bookings
-- View booking information
-- Simple API system using Node.js
-- Automated testing using GitHub Actions
+## Live Links
+- **Production:** https://itdi204-majorproject.onrender.com
+- **Staging:** https://itdi204-majorproject-1.onrender.com
+- **Backend API:** https://your-backend.onrender.com
 
-## How to Run the Project
+## Tech Stack
+| Component | Technology |
+|-----------|------------|
+| Frontend | React.js |
+| Backend | Node.js + Express |
+| Database | PostgreSQL |
+| Deployment | Render |
+| CI/CD | GitHub Actions |
 
-### 1. Install dependencies
-```bash
-npm install
-=======
-# ITDI204-MajorProject
->>>>>>> 0db9dbf834311a7c08664b9ed48c0cc422945930
+## API Documentation
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/` | Health check |
+| GET | `/accommodations` | Get all accommodations |
+| GET | `/car-rentals` | Get all car rentals |
+| GET | `/tours` | Get all tours |
+| POST | `/signup` | Register user |
+| POST | `/login` | User login |
+| PUT | `/update-profile` | Update profile |
+
+## Environment Variables
+
+### Backend (.env)
