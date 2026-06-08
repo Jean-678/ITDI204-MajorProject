@@ -7,11 +7,15 @@ app.use(cors());
 app.use(express.json());
 
 const pool = new Pool({
-  user: "postgres",
-  host: "localhost",
-  database: "vanuatu_centralized_tourism_spa",
-  password: "Deni2005",
-  port: 5432,
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false
+  }
+});
+
+// Root route for health checks
+app.get("/", (req, res) => {
+  res.send("Backend is running!");
 });
 
 app.get("/accommodations", async (req, res) => {
@@ -19,8 +23,9 @@ app.get("/accommodations", async (req, res) => {
   res.json(result.rows);
 });
 
-app.listen(5000, () => {
-  console.log("Server running on port 5000");
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
 
 app.get("/car-rentals", async (req, res) => {
