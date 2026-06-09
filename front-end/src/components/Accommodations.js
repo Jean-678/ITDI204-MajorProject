@@ -19,7 +19,7 @@ function Accommodations() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("http://localhost:5000/accommodations")
+    fetch((process.env.REACT_APP_API_URL || "http://localhost:5000") + "/accommodations")
       .then(res => res.json())
       .then(data => {
         setAccommodations(data);
