@@ -8,22 +8,20 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Get code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Install Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: 22
 
-      - name: Install dependencies
-        run: npm install
+      - run: npm install
 
-      - name: Start booking system
-        run: node api.js &
-
+      - name: Start server
+        run: |
+          node api.js &
+      
       - name: Wait for server
-        run: sleep 5
+        run: npx wait-on http://localhost:3000
 
-      - name: Check system is running
+      - name: Test server
         run: curl -f http://localhost:3000

@@ -135,3 +135,4 @@ app.put("/update-profile", async (req, res) => {
     res.status(500).json({ error: "Server error during profile update" });
   }
 });
+
