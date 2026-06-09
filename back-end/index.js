@@ -16,6 +16,16 @@ app.get("/", (req, res) => {
   res.send("Backend is running!");
 });
 
+// health check endpoint
+app.get("/health", (req, res) => {
+  res.json({ status: "ok", message: "Backend is running" });
+});
+
+//check that API is running
+app.get("/check", (req, res) => {
+  res.json({ status: "green", message: "API is running Perfectly" });
+});
+
 app.get("/accommodations", async (req, res) => {
   const result = await pool.query("SELECT * FROM accommodations");
   res.json(result.rows);
@@ -51,8 +61,8 @@ app.post("/signup", async (req, res) => {
     }
 
     // insert user
-    
-const result = await pool.query(
+
+    const result = await pool.query(
       `INSERT INTO users 
       (full_name, email, password, first_name, last_name, country, dob) 
       VALUES ($1, $2, $3, $4, $5, $6, $7) 
