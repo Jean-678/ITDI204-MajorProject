@@ -1,27 +1,39 @@
-name: Booking System CI
+name: CI Pipeline
 
 on:
   push:
+    branches:
+      - '**'
 
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: '22'
 
-      - run: npm install
-
-      - name: Start server
+      - name: Install dependencies
         run: |
-          node api.js &
-      
-      - name: Wait for server
-        run: npx wait-on http://localhost:5000
+          npm install
+          cd back-end
+          npm install
 
-      - name: Test server
-        run: curl -f http://localhost:5000
+      - name: Run app
+        run: |
+          cd back-end
+          node index.js &
+
+      - name: Wait for server
+        run: sleep 3
+
+      - name: Test API
+        run: curl -f http://localhost:5000/
+        
+      - name: Stop server
+        run: pkill node
