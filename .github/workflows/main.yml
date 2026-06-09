@@ -21,7 +21,7 @@ jobs:
           node api.js &
       
       - name: Wait for server
-        run: npx wait-on http://localhost:3000
+        run: npx wait-on http://localhost:5000
 
       - name: Test server
-        run: curl -f http://localhost:3000
+        run: curl -f http://localhost:5000
